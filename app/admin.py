@@ -3,9 +3,9 @@ from app import models
 
 
 class ChoiceInline(admin.TabularInline):
-    model= models.Choice
+    model = models.Choice
     extra = 2
-    
+
 
 @admin.register(models.Question)
 class QuestionAdmin(admin.ModelAdmin):
@@ -13,9 +13,9 @@ class QuestionAdmin(admin.ModelAdmin):
 
 
 class QuestionInline(admin.TabularInline):
-    model= models.Question
+    model = models.Question
     extra = 1
-    
+
 
 @admin.register(models.Test)
 class TestAdmin(admin.ModelAdmin):
@@ -23,9 +23,9 @@ class TestAdmin(admin.ModelAdmin):
 
 
 class TestInline(admin.TabularInline):
-    model= models.Test
+    model = models.Test
     extra = 1
-    
+
 
 @admin.register(models.Theme)
 class ThemeAdmin(admin.ModelAdmin):
