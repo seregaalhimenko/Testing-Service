@@ -12,8 +12,8 @@ class Theme(models.Model):
 
 
 class Test(models.Model):
-    # creator = models.ForeignKey(settings.AUTH_USER_MODEL,
-    #                          on_delete=models.CASCADE)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL,
+                               on_delete=models.CASCADE)
     name = models.CharField(max_length=500)
     theme = models.ForeignKey(Theme, on_delete=models.CASCADE)
 
@@ -22,6 +22,8 @@ class Test(models.Model):
 
 
 class Question(models.Model):
+    author = models.ForeignKey(settings.AUTH_USER_MODEL,
+                               on_delete=models.CASCADE)
     text = models.TextField()
     test = models.ForeignKey(Test, on_delete=models.CASCADE)
 
@@ -30,6 +32,8 @@ class Question(models.Model):
 
 
 class Choice(models.Model):
+    author = models.ForeignKey(settings.AUTH_USER_MODEL,
+                               on_delete=models.CASCADE)
     value = models.BooleanField()
     text = models.TextField()
     questions = models.ForeignKey(Question, on_delete=models.CASCADE)

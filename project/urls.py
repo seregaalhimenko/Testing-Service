@@ -13,7 +13,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # path('app/api/', include('app.urls_api')),
     path('app/v1/', include('app.urls')),
-    
+
 ]
 
 urlpatterns += doc_urls

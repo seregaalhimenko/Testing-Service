@@ -1,5 +1,5 @@
 from app.models import AnswerTracker
-from app.detail_serializers import AnswerTrackerDetailSerializer as Serializer
+from app.serializers import AnswerTrackerSerializer as Serializer
 from rest_framework import mixins
 from rest_framework import generics
 from rest_framework import permissions
@@ -31,7 +31,7 @@ class AnswerTrackerURD(mixins.RetrieveModelMixin,
         return self.retrieve(request, *args, **kwargs)
 
     def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
+        return self.partial_update(request, *args, **kwargs)
 
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)

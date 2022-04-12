@@ -1,51 +1,55 @@
-# from cgi import test
-# from pyexpat import model
-# from re import T
-# from secrets import choice
-# from rest_framework import generics, status
-# from rest_framework.views import APIView, Response, Request
-# from app import serializers
-# from app import models
-# from rest_framework import serializers as rest_serializers
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from rest_framework import views,status
+from rest_framework.response import Response
+from app.models import *
+from app.serializers import QuestionShowSerializer,InAnswerTrackerSerializer, TestShortListSerializer
+from app.validators import request_is_valid
 
+class StartQuiz(views.APIView):
+    def post(self, request, *args, **kwargs):
 
-# class ThemeListView(generics.ListAPIView):
-#     queryset = models.Theme.objects.all()
-#     serializer_class = serializers.ThemeListSerializer
+        test_obj = Test.objects.get(id=kwargs.get('test_id'))
+        ser_test = TestShortListSerializer(test_obj)
+        #Проверить проходил ли этот тест пользователь
+        if 'results' not in request.session:
+            request.session['results'] = list()
+        if 'questions_arr' not in request.session:
+            request.session['questions_arr'] = ser_test.data['question_set']
 
+        if 'selected_question' in request.session:
+            if not (request_is_valid(data=request.data, question_id=request.session['selected_question'].get('id'))):
+                question_obj = Question.objects.get(id=request.session['selected_question'].get('id'))
+                ser_question = QuestionShowSerializer(question_obj)
+                return Response(status=status.HTTP_400_BAD_REQUEST,data={"error": "invalid response format",**ser_question.data})
+            for answ in request.data:
+                request.session['results'].append(
+                    {
+                        "question":request.session['selected_question'].get('id'),
+                        "user": request.user.id,
+                        "test": kwargs.get('test_id'),
+                        "choice":answ,
+                        }
+                    )
 
-# class ThemeDetailView(APIView):
-#     def get(self, request: Request, pk):
-#         theme = models.Theme.objects.get(id=pk)
-#         serializer = serializers.ThemeDetailSerializer(theme)
-#         return Response(serializer.data)
+        if not len(request.session['questions_arr']):
+            results = InAnswerTrackerSerializer(data=request.session['results'], many=True)
+            print(results.is_valid())
+            if results.is_valid():
+                results.save()
+            del request.session['questions_arr']
+            del request.session['results']
+            del request.session['selected_question']
+            # headers={
+            #     "Location": reverse("result_list")
+            #     }
+            return HttpResponseRedirect(reverse("result_list"))
+            # return Response(status=status.HTTP_201_CREATED, headers=headers)
+                
+        
+        request.session['selected_question'] = request.session['questions_arr'].pop()
+        request.session.modified = True
 
-#     # def post(self,request: Request, pk):
-#     #     test_id = request.data.get('id')
-#     #     test = models.Test.objects.get(id = test_id)
-#     #     serializer = serializers.TestDetailSerializer(test)
-#     #     return Response(serializer)
-
-# # class TestStartView(APIView):
-# #     def get(self,_, **kwargs):
-
-# #         # theme = models.Theme.objects.get(id=kwargs["id_theme"])#first vmesto get
-# #         theme_id_from_url = kwargs["id_theme"]
-# #         test =  models.Test.objects.get(id=kwargs["id_test"])
-# #         theme_id_from_tets = test.id
-# #         if theme_id_from_tets != theme_id_from_url:
-# #             Response(status=status.HTTP_400_BAD_REQUEST)
-# #         serializer = serializers.TestListSerializer(test)
-# #         return Response()
-
-
-# class TestStartView(APIView):
-#     def get(self, _, **kwargs):
-#         question = models.Question.objects.get(id=kwargs["id_question"])
-#         test = models.Test.objects.get(question=question)
-#         theme = models.Theme.objects.get(test=test)
-#         if not(test.id == kwargs["id_test"] and theme.id == kwargs["id_theme"]):
-#             return Response({'Bad Request': "invalid url"}, status=status.HTTP_400_BAD_REQUEST)
-
-#         serializer = serializers.QuestionShowSerializer(question)
-#         return Response(serializer.data)
+        question_obj = Question.objects.get(id=request.session['selected_question'].get('id'))
+        ser_question = QuestionShowSerializer(question_obj)
+        return Response(data=ser_question.data)
