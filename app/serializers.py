@@ -10,11 +10,8 @@ class ChoiceSerializer(serializers.ModelSerializer):
         fields = ['id', 'author', 'text', 'value', 'questions', 'comment']
 
 
-class QuestionSerializer(serializers.ModelSerializer):
+class QuestionSerializer(serializers.ModelSerializer): 
     ''' Question model serializer '''
-    # choice_set = ChoiceDetailSerializer(
-    #     many=True, read_only=True, required=False)
-
     class Meta:
         model = models.Question
         fields = ['id', 'author', 'text', 'test']
@@ -25,6 +22,7 @@ class ChoiceShowSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Choice
         fields = ['id', 'text']
+
 
 
 class QuestionShowSerializer(serializers.ModelSerializer):

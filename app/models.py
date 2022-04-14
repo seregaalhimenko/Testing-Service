@@ -43,6 +43,11 @@ class Choice(models.Model):
         return self.text
 
 
+class PassedTests(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    test = models.ForeignKey(Test, on_delete=models.CASCADE)
+
+
 class AnswerTracker(models.Model):
     ''' Model for storing customer's answers '''
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
@@ -54,3 +59,4 @@ class AnswerTracker(models.Model):
 
     def __str__(self):
         return f'{self.user} - {self.test} '
+

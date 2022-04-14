@@ -11,7 +11,8 @@ class StartQuiz(views.APIView):
 
         test_obj = Test.objects.get(id=kwargs.get('test_id'))
         ser_test = TestShortListSerializer(test_obj)
-        #Проверить проходил ли этот тест пользователь
+        if PassedTests.objects.filter(user=request.user).all():
+            return  Response(status=status.HTTP_400_BAD_REQUEST,data={"error": "the user has already passed this test"})
         if 'results' not in request.session:
             request.session['results'] = list()
         if 'questions_arr' not in request.session:
@@ -43,7 +44,7 @@ class StartQuiz(views.APIView):
             # headers={
             #     "Location": reverse("result_list")
             #     }
-            return HttpResponseRedirect(reverse("result_list"))
+            return HttpResponseRedirect(reverse("result_test",kwargs={"test_id":kwargs["test_id"]}))
             # return Response(status=status.HTTP_201_CREATED, headers=headers)
                 
         
