@@ -8,7 +8,7 @@ from app.castom_permission import AuthorOrReadOnly
 class Result (generics.GenericAPIView):
     queryset = Test.objects.all()
     permission_classes = [AuthorOrReadOnly]
-
+    # serializer_class = ResultSerializer #
     def get(self, request, *args, **kwargs):
         test= self.queryset.get(id = kwargs["test_id"])
         return Response(data=ResultSerializer(test).data)
