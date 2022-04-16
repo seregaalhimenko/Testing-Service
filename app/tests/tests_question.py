@@ -14,9 +14,9 @@ from app.tests.base import BaseTestCase
 class Tests(BaseTestCase):
     def setUp(self) -> None:
         super().setUp()
-        self.url_datail = reverse('question_detail', kwargs={
+        self.url_datail = reverse('question-detail', kwargs={
             'pk': self.question.id})
-        self.url_list = reverse('question_list')
+        self.url_list = reverse('question-list')
         self.serializer: Serializer = QuestionSerializer
         self.model: Model = Question
 

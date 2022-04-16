@@ -14,9 +14,9 @@ class Tests(BaseTestCase):
     def setUp(self) -> None:
         super().setUp()
         self.point = self.choice2
-        self.url_datail = reverse('choice_detail', kwargs={
+        self.url_datail = reverse('choice-detail', kwargs={
             'pk': self.point.id})
-        self.url_list = reverse('choice_list')
+        self.url_list = reverse('choice-list')
         self.serializer: Serializer = ChoiceSerializer
         self.model: Model = Choice
 
@@ -54,7 +54,7 @@ class Tests(BaseTestCase):
         data = {
             "text": "choice_update"
         }
-        response: Response = self.client.put(
+        response: Response = self.client.patch(
             url,
             data,
             format='json'

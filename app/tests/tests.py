@@ -1,5 +1,4 @@
 import json
-from urllib import response
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.response import Response
@@ -19,13 +18,13 @@ class Tests(APITestCase):
         self.client.force_authenticate(user=self.user_test)
 
     def create_theme(self) -> Response:
-        url = reverse('theme_list')
+        url = reverse('theme-list')
         data = {'name': 'test_theme', "theory": "test_theory"}
         return self.client.post(url, data, format='json')
 
     def create_test(self) -> Response:
         response = self.create_theme()
-        url = reverse('test_list')
+        url = reverse('test-list')
         data = {
             'author': self.user_test.id,
             "name": "tetsTests",
@@ -45,14 +44,14 @@ class Tests(APITestCase):
 
     def test_show_Test(self):
         create_test_response = self.create_test()
-        url = reverse('test_detail', kwargs={
+        url = reverse('test-detail', kwargs={
                       'pk': create_test_response.data['id']})
         response: Response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         data = TestSerializer(Test.objects.get(
             id=create_test_response.data['id'])).data
         self.assertEqual(data, json.loads(response.content))
-        url = reverse('test_list')
+        url = reverse('test-list')
         response: Response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn(data, json.loads(response.content))
@@ -60,7 +59,7 @@ class Tests(APITestCase):
     def test_update_Test(self):
         create_test_response = self.create_test()
 
-        url = reverse('test_detail', kwargs={
+        url = reverse('test-detail', kwargs={
                       'pk': create_test_response.data['id']})
 
         data = {
@@ -85,7 +84,7 @@ class Tests(APITestCase):
 
     def test_delete_Test(self):
         create_test_response = self.create_test()
-        url = reverse('test_detail', kwargs={
+        url = reverse('test-detail', kwargs={
                       'pk': create_test_response.data['id']})
         response: Response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)

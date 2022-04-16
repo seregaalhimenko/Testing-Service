@@ -22,7 +22,7 @@ class ThemeTests(APITestCase):
         self.client.force_authenticate(user=self.user_test)
 
     def create_theme(self) -> Response:
-        url = reverse('theme_list')
+        url = reverse('theme-list')
         data = {'name': 'test_theme', "theory": "test_theory"}
         return self.client.post(url, data, format='json')
 
@@ -33,20 +33,19 @@ class ThemeTests(APITestCase):
         response = self.create_theme()
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Theme.objects.count(), 1)
-        # response.headers["Location"] по договоренности rest (вроде) id созданной модели должен быть в location и не должен возвращать нечего...поправим :)
         self.assertEqual(Theme.objects.get().name, 'test_theme')
         self.theme_id = response.data['id']
 
     def test_show_Theme(self):
         create_theme_response = self.create_theme()
-        url = reverse('theme_detail', kwargs={
+        url = reverse('theme-detail', kwargs={
                       'pk': create_theme_response.data['id']})
         response: Response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         data = ThemeSerializer(Theme.objects.get(
             id=create_theme_response.data['id'])).data
         self.assertEqual(data, json.loads(response.content))
-        url = reverse('theme_list')
+        url = reverse('theme-list')
         response: Response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn(data, json.loads(response.content))
@@ -54,7 +53,7 @@ class ThemeTests(APITestCase):
     def test_update_Theme(self):
         create_theme_response = self.create_theme()
 
-        url = reverse('theme_detail', kwargs={
+        url = reverse('theme-detail', kwargs={
                       'pk': create_theme_response.data['id']})
 
         response: Response = self.client.put(
@@ -73,7 +72,7 @@ class ThemeTests(APITestCase):
 
     def test_delete_Theme(self):
         create_theme_response = self.create_theme()
-        url = reverse('theme_detail', kwargs={
+        url = reverse('theme-detail', kwargs={
                       'pk': create_theme_response.data['id']})
         response: Response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
