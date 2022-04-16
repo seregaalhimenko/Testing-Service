@@ -7,3 +7,4 @@ class TestViewSet(viewsets.ModelViewSet):
     queryset = Test.objects.all()
     serializer_class = Serializer
     permission_classes = [AuthorOrReadOnly]
+    tags = ["Test"]

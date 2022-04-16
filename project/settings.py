@@ -95,6 +95,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+SWAGGER_SETTINGS = {"DEFAULT_AUTO_SCHEMA_CLASS":"project.schema.CustomAutoSchema"}
+
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'

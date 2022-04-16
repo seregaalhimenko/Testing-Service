@@ -8,3 +8,4 @@ class ChoiceViewSet(viewsets.ModelViewSet):
     queryset = Choice.objects.all()
     serializer_class = Serializer
     permission_classes = [AuthorOrReadOnly]
+    tags = ["Choice"]

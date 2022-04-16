@@ -1,12 +1,12 @@
 from django.conf import settings
 from rest_framework import serializers
 from app import models
-
-class ChoiceSerializer(serializers.ModelSerializer):
-    ''' Choice model serializer '''
-    class Meta:
-        model = models.Choice
-        fields = ['id', 'text']
+from app.serializers import ChoiceShowSerializer
+# class ChoiceSerializer(serializers.ModelSerializer):
+#     ''' Choice model serializer '''
+#     class Meta:
+#         model = models.Choice
+#         fields = ['id', 'text']
 
 class AnswerSerializer(serializers.ModelSerializer):
     text= serializers.CharField(source='choice.text')
@@ -16,9 +16,9 @@ class AnswerSerializer(serializers.ModelSerializer):
        model = models.AnswerTracker
        fields = ['text', 'value', 'comment']
 
-class QuestionSerializer(serializers.ModelSerializer):
+class QuestionWithAnswersSerializer(serializers.ModelSerializer):
     ''' Question model serializer '''
-    choice_set = ChoiceSerializer(
+    choice_set = ChoiceShowSerializer(
         many=True, read_only=True, required=False)
     answertracker_set = AnswerSerializer(
         many=True, read_only=True, required=False)
@@ -29,7 +29,7 @@ class QuestionSerializer(serializers.ModelSerializer):
 
 class ResultSerializer(serializers.ModelSerializer):
     ''' Test model serializer '''
-    question_set = QuestionSerializer(
+    question_set = QuestionWithAnswersSerializer(
         many=True, read_only=True, required=False)
 
     class Meta:

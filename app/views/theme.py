@@ -5,3 +5,4 @@ from rest_framework import viewsets
 class ThemeViewSet(viewsets.ModelViewSet):
     queryset = Theme.objects.all()
     serializer_class = Serializer
+    tags = ["Theme"]

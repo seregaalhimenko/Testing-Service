@@ -8,3 +8,4 @@ class AnswerViewSet(viewsets.ModelViewSet):
     queryset = AnswerTracker.objects.all()
     serializer_class = Serializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    tags = ["Answer"]
