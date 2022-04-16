@@ -27,7 +27,7 @@ class QuestionSerializer(serializers.ModelSerializer):
         # fields = ['id', 'text', 'choice_set', 'answer_set']
         fields = "__all__"
 
-class ResaltSerializer(serializers.ModelSerializer):
+class ResultSerializer(serializers.ModelSerializer):
     ''' Test model serializer '''
     question_set = QuestionSerializer(
         many=True, read_only=True, required=False)

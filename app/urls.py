@@ -1,6 +1,6 @@
 from django.urls import path
 # from app import api
-from app.views import theme, test, question, answer_tracker, choice, views, resalt_test
+from app.views import theme, test, question, answer_tracker, choice, views, result_test
 
 
 urlpatterns = [
@@ -17,7 +17,7 @@ urlpatterns = [
     path('choice/<int:pk>/', choice.ChoiceURD.as_view(), name="choice_detail"),
     path('answer/', answer_tracker.AnswerTrackerCR.as_view(), name="answer_list"),
     path('answer/<int:pk>/', answer_tracker.AnswerTrackerURD.as_view(), name="answer_detail"),
-    path('result/<int:test_id>/', resalt_test.Resalt.as_view(), name="result_test"),
+    path('result/<int:test_id>/', result_test.Result.as_view(), name="result_test"),
 
 
 ]
