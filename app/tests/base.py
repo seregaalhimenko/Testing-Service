@@ -22,6 +22,7 @@ class BaseTestCase(APITestCase):
         self.question = Question(
             author=self.user_test, text="test_question", test=self.test)
         self.question.save()
+
         self.choice1 = Choice(author=self.user_test,
                               text="Yes", value=True, questions=self.question)
         self.choice1.save()
@@ -32,12 +33,12 @@ class BaseTestCase(APITestCase):
             email="answ1@test.com", password="Test1234!")
         self.user3 = get_user_model().objects.create(
             email="answ2@test.com", password="Test1234!")
-        self.answer1 = AnswerTracker(
-            user=self.user3, test=self.test, question=self.question, choice=self.choice2)
-        self.answer1.save()
-        self.answer2 = AnswerTracker(
-            user=self.user2, test=self.test, question=self.question, choice=self.choice1)
-        self.answer2.save()
+        # self.answer1 = AnswerTracker(
+        #     user=self.user3, test=self.test, question=self.question, choice=self.choice2)
+        # self.answer1.save()
+        # self.answer2 = AnswerTracker(
+        #     user=self.user2, test=self.test, question=self.question, choice=self.choice1)
+        # self.answer2.save()
 
         self.url_datail = None
         self.url_list = None
