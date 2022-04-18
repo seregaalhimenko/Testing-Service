@@ -17,7 +17,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Theme',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=500)),
                 ('theory', models.TextField()),
             ],
@@ -25,48 +26,65 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Test',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=500)),
-                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-                ('theme', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='app.theme')),
+                ('author', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('theme', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to='app.theme')),
             ],
         ),
         migrations.CreateModel(
             name='Question',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('text', models.TextField()),
-                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-                ('test', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='app.test')),
+                ('author', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('test', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to='app.test')),
             ],
         ),
         migrations.CreateModel(
             name='PassedTests',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('test', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='app.test')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
+                ('test', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to='app.test')),
+                ('user', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(
             name='Choice',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('value', models.BooleanField()),
                 ('text', models.TextField()),
                 ('comment', models.TextField(blank=True)),
-                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-                ('questions', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='app.question')),
+                ('author', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('questions', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to='app.question')),
             ],
         ),
         migrations.CreateModel(
             name='AnswerTracker',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('choice', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='app.choice')),
-                ('question', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='app.question')),
-                ('test', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='app.test')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
+                ('choice', models.ForeignKey(blank=True, null=True,
+                 on_delete=django.db.models.deletion.CASCADE, to='app.choice')),
+                ('question', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to='app.question')),
+                ('test', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to='app.test')),
+                ('user', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
     ]

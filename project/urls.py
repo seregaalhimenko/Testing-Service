@@ -2,10 +2,10 @@
     path('', Home.as_view(), name='home')
     path('blog/', include('blog.urls'))
 """
+from django.shortcuts import redirect
 from django.contrib import admin
 from django.urls import path, include, re_path
 from.yasg import urlpatterns as doc_urls
-from django.shortcuts import redirect
 
 
 urlpatterns = [
@@ -18,6 +18,6 @@ urlpatterns = [
 
 urlpatterns += doc_urls
 
-urlpatterns +=[ 
+urlpatterns += [
     path('', lambda request: redirect('doc/', permanent=True)),
 ]

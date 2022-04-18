@@ -33,3 +33,4 @@ class ThemeAdmin(admin.ModelAdmin):
 
 
 admin.site.register(models.Choice)
+admin.site.register(models.PassedTests)

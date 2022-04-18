@@ -8,13 +8,16 @@ from app.serializers import ChoiceShowSerializer
 #         model = models.Choice
 #         fields = ['id', 'text']
 
+
 class AnswerSerializer(serializers.ModelSerializer):
-    text= serializers.CharField(source='choice.text')
-    value= serializers.CharField(source='choice.value')
-    comment= serializers.CharField(source='choice.comment', allow_null=True)
+    text = serializers.CharField(source='choice.text')
+    value = serializers.CharField(source='choice.value')
+    comment = serializers.CharField(source='choice.comment', allow_null=True)
+
     class Meta:
-       model = models.AnswerTracker
-       fields = ['text', 'value', 'comment']
+        model = models.AnswerTracker
+        fields = ['text', 'value', 'comment']
+
 
 class QuestionWithAnswersSerializer(serializers.ModelSerializer):
     ''' Question model serializer '''
@@ -22,10 +25,12 @@ class QuestionWithAnswersSerializer(serializers.ModelSerializer):
         many=True, read_only=True, required=False)
     answertracker_set = AnswerSerializer(
         many=True, read_only=True, required=False)
+
     class Meta:
         model = models.Question
         # fields = ['id', 'text', 'choice_set', 'answer_set']
         fields = "__all__"
+
 
 class ResultSerializer(serializers.ModelSerializer):
     ''' Test model serializer '''

@@ -44,7 +44,8 @@ class Choice(models.Model):
 
 
 class PassedTests(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE)
     test = models.ForeignKey(Test, on_delete=models.CASCADE)
 
 
@@ -59,4 +60,3 @@ class AnswerTracker(models.Model):
 
     def __str__(self):
         return f'{self.user} - {self.test} '
-

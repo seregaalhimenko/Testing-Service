@@ -18,11 +18,12 @@ class TestViewSet(viewsets.ModelViewSet):
 
     @action(methods=['post'], detail=True, permission_classes=[permissions.IsAuthenticated],
             url_path='start', url_name='start_test')
-    def start_quiz(self, request, pk, *args,**kwargs):
-        return start_quiz(request=request,pk=pk)
+    def start_quiz(self, request, pk, *args, **kwargs):
+        return start_quiz(request=request, pk=pk)
 
-    @action(methods=['get'], detail=True, permission_classes=[permissions.IsAuthenticated],url_path='result', url_name='result_test')
-    def result(self, request, pk, *args,**kwargs):
+    @action(methods=['get'], detail=True, permission_classes=[permissions.IsAuthenticated],
+            url_path='result', url_name='result_test')
+    def result(self, request, pk, *args, **kwargs):
         instance = self.get_object()
         serializer_obj = ResultSerializer(instance)
         return Response(data=serializer_obj.data)

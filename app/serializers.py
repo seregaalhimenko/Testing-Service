@@ -10,7 +10,7 @@ class ChoiceSerializer(serializers.ModelSerializer):
         fields = ['id', 'author', 'text', 'value', 'questions', 'comment']
 
 
-class QuestionSerializer(serializers.ModelSerializer): 
+class QuestionSerializer(serializers.ModelSerializer):
     ''' Question model serializer '''
     class Meta:
         model = models.Question
@@ -22,7 +22,6 @@ class ChoiceShowSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Choice
         fields = ['id', 'text']
-
 
 
 class QuestionShowSerializer(serializers.ModelSerializer):
@@ -41,6 +40,7 @@ class QuestionShortSerializer(serializers.ModelSerializer):
         model = models.Question
         fields = ['id']
 
+
 class TestShortListSerializer(serializers.ModelSerializer):
     ''' Test model serializer '''
     question_set = QuestionShortSerializer(
@@ -49,7 +49,6 @@ class TestShortListSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Test
         fields = ['id', 'question_set']
-
 
 
 class TestSerializer(serializers.ModelSerializer):
@@ -70,12 +69,13 @@ class ThemeSerializer(serializers.ModelSerializer):
         model = models.Theme
         fields = ['id', 'name', 'theory']
 
+
 class InAnswerTrackerSerializer(serializers.ModelSerializer):
     ''' AnswerTracker model serializer '''
     class Meta:
         model = models.AnswerTracker
         fields = ['user', 'test', 'question', 'choice']
-        
+
 
 class AnswerTrackerSerializer(serializers.ModelSerializer):
     ''' AnswerTracker model serializer '''
